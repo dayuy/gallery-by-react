@@ -3,7 +3,6 @@ require('styles/App.css');
 
 import React from 'react';
 
-let yeomanImage = require('../images/1.jpg');
 let imageDatas = require('../data/imageDatas.json');
 
 imageDatas = (function genImageURL(imageDatasArr){
@@ -124,12 +123,12 @@ class AppComponent extends React.Component {
           imgsArrangeArr:imgsArrangeArr
         });
 
-
   }
 
   //指定初始化状态对象
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       imgsArrangeArr:[{
         pos:{
           left:0,
@@ -138,6 +137,7 @@ class AppComponent extends React.Component {
       }]
     }
   }
+  
 
   //组建加载之后，为每张图片计算器位置的范围
   componentDidMount() {
@@ -165,7 +165,7 @@ class AppComponent extends React.Component {
     //左侧和右侧位置点 取值范围
     this.Constant.hPosRange.leftSecX[0] = - halfImgW;
     this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
-    this.Constant.hPosRange.rightSecX[0] = halfStageW - halfImgW;
+    this.Constant.hPosRange.rightSecX[0] = halfStageW + halfImgW;
     this.Constant.hPosRange.rightSecX[1] = stageW - halfImgW;
     this.Constant.hPosRange.y[0] = - halfImgH;
     this.Constant.hPosRange.y[1] = stageH - halfImgH;
@@ -173,8 +173,8 @@ class AppComponent extends React.Component {
     //上下位置取值 点
     this.Constant.vPosRange.topY[0] = - halfImgH;
     this.Constant.vPosRange.topY[1] = halfStageH - halfImgH * 3;
-    this.Constant.vPosRange.x[0] = halfImgW - imgW;
-    this.Constant.vPosRange.x[1] = halfImgW;
+    this.Constant.vPosRange.x[0] = halfStageW - imgW;
+    this.Constant.vPosRange.x[1] = halfStageW;
     
 
     this.rearrange(0);
@@ -188,7 +188,7 @@ class AppComponent extends React.Component {
     imageDatas.forEach(function(value,index){
 
       if (!this.state.imgsArrangeArr[index]) {
-        this.stage.imgsArrangeArr[index] = {
+        this.state.imgsArrangeArr[index] = {
           pos:{
             left:0,
             top:0
@@ -196,8 +196,8 @@ class AppComponent extends React.Component {
         }
       }
 
-      imgFigures.push(<ImgFigure data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} />);
-    },bing(this));
+      imgFigures.push(<ImgFigure data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
+    }.bind(this));
 
     return (
       <section className="stage" ref="stage">
