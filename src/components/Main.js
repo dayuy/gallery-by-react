@@ -2,6 +2,7 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 
 import React from 'react';
+import ReactDOM,{findDOMNode} from 'react-dom';
 
 let imageDatas = require('../data/imageDatas.json');
 
@@ -44,32 +45,46 @@ class ImgFigure extends React.Component {
 }
 
 class AppComponent extends React.Component {
-  Constant:{        //初始化值
-    centerPos:{
-      left:0,
-      right:0
-    },
-    hPosRange:{     //水平方向取值范围
-      leftSecX:[0,0],
-      rightSecX:[0,0],
-      y:[0,0]
-    },
-    vPosRange:{    //垂直方向取值范围
-      x:[0,0],
-      topY:[0,0]
-    }
-  }
+  constructor(props) {       //指定初始化状态对象
+    super(props);
+    this.state = 
+    {
+      Constant:{        //初始化值 设置默认属性
+          centerPos:{
+            left:0,
+            right:0
+          },
+          hPosRange:{     //水平方向取值范围
+            leftSecX:[0,0],
+            rightSecX:[0,0],
+            y:[0,0]
+          },
+          vPosRange:{    //垂直方向取值范围
+            x:[0,0],
+            topY:[0,0]
+          }
+        },
+        imgsArrangeArr:[
+        {
+          pos:{
+            left:0,
+            top:0
+          }
+        }
+      ]
+      }
+  } 
 
   //重新布局所有图片  centerIndex指定居中排布那个图片
   rearrange(centerIndex){
     let imgsArrangeArr = this.state.imgsArrangeArr,
-        Constant = this.Constant,
+        Constant = this.state.Constant,
         centerPos = Constant.centerPos,
         hPosRange = Constant.hPosRange,
         vPosRange = Constant.vPosRange,
         hPosRangeLeftSecX = hPosRange.leftSecX,
         hPosRangeRightSecX = hPosRange.rightSecX,
-        hPosRangeY = hPosRange.Y,
+        hPosRangeY = hPosRange.y,
         vPosRangeTopY = vPosRange.topY,
         vPosRangeX = vPosRange.x,
 
@@ -95,12 +110,12 @@ class AppComponent extends React.Component {
         });
 
         //布局左右两侧图片
-        for(let i = 0;i<(imgsArrangeArr.length / 2);i++){
+        for(let i = 0,j=imgsArrangeArr.length,k = j / 2; i<j;i++){
           let hPosRangeLORX = null;
 
 
           //前半部分布局左边，有半部分布局右边
-          if (i<(imgsArrangeArr.length / 2)) {
+          if (i<k) {
             hPosRangeLORX = hPosRangeLeftSecX;
           }else{
             hPosRangeLORX = hPosRangeRightSecX;
@@ -124,25 +139,12 @@ class AppComponent extends React.Component {
         });
 
   }
-
-  //指定初始化状态对象
-  constructor(props) {
-    super(props);
-    this.state = {
-      imgsArrangeArr:[{
-        pos:{
-          left:0,
-          top:0
-        }
-      }]
-    }
-  }
   
 
   //组建加载之后，为每张图片计算器位置的范围
   componentDidMount() {
     //先拿到舞台大小
-    let stageDOM = React.findDOMNode(this.refs.stage),
+    let stageDOM = findDOMNode(this.refs.stage),
         stageW = stageDOM.scrollWidth,
         stageH = stageDOM.scrollHeight,
         halfStageH = Math.ceil(stageW / 2),
@@ -150,31 +152,32 @@ class AppComponent extends React.Component {
 
 
     //拿到一个imageFigure的大小
-    let imgFigureDOM = React.findDOMNode(this.refs.imgFigure0),
+    let imgFigureDOM = findDOMNode(this.refs.imgFigure0),
         imgW = imgFigureDOM.scrollWidth,
         imgH = imgFigureDOM.scrollHeight,
         halfImgW = Math.ceil(imgW / 2),
         halfImgH = Math.ceil(imgH / 2);
 
     //计算中心图片的位置点
-    this.Constant.centerPos = {
+    this.state.Constant.centerPos = {
       left:halfStageW - halfImgW,
       top:halfStageH - halfImgH
     }
+    
 
     //左侧和右侧位置点 取值范围
-    this.Constant.hPosRange.leftSecX[0] = - halfImgW;
-    this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
-    this.Constant.hPosRange.rightSecX[0] = halfStageW + halfImgW;
-    this.Constant.hPosRange.rightSecX[1] = stageW - halfImgW;
-    this.Constant.hPosRange.y[0] = - halfImgH;
-    this.Constant.hPosRange.y[1] = stageH - halfImgH;
+    this.state.Constant.hPosRange.leftSecX[0] = -halfImgW;
+    this.state.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
+    this.state.Constant.hPosRange.rightSecX[0] = halfStageW + halfImgW;
+    this.state.Constant.hPosRange.rightSecX[1] = stageW - halfImgW;
+    this.state.Constant.hPosRange.y[0] = -halfImgH;
+    this.state.Constant.hPosRange.y[1] = stageH - halfImgH;
 
     //上下位置取值 点
-    this.Constant.vPosRange.topY[0] = - halfImgH;
-    this.Constant.vPosRange.topY[1] = halfStageH - halfImgH * 3;
-    this.Constant.vPosRange.x[0] = halfStageW - imgW;
-    this.Constant.vPosRange.x[1] = halfStageW;
+    this.state.Constant.vPosRange.topY[0] = -halfImgH;
+    this.state.Constant.vPosRange.topY[1] = halfStageH - halfImgH * 3;
+    this.state.Constant.vPosRange.x[0] = halfStageW - imgW;
+    this.state.Constant.vPosRange.x[1] = halfStageW;
     
 
     this.rearrange(0);
@@ -213,6 +216,7 @@ class AppComponent extends React.Component {
 }
 
 AppComponent.defaultProps = {
+
 };
 
 export default AppComponent;
