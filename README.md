@@ -8,6 +8,11 @@
 4. 运行 node server.js
 5. npm install autoprefixer-loader --save-dev
 6. 编辑 Main.js 开始项目	
+7. 发布项目  
+    1. 打包到dist目录npm run copy & webpack --env=dist
+    2. git add \git commit
+    3. git subtree push --prefix=dist origin gh-pages  推送到Github提供的静态文件访问上
+    4. 访问
 
 ### 知识点
 CSS3翻转属性
@@ -20,6 +25,7 @@ CSS3翻转属性
 6. perspective:1800px;
 7. Icon Font:字体文件 取代图片文件展示图片（1体积小，2支持css3属性变形）需在头部进行字体声明：@font-face{font-family:"";src:url() format(兼容)}
 8. CSS3伪元素&::after插入元素，而伪类的方式只需使用&:hover一个冒号。
+9. react 重新渲染时，是比较之前的结构和现在的结构，用key 给数组对应的一个值更快速的配对，加快性能。
 
 ### 调试技巧
 debugger();
