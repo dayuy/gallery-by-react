@@ -177,7 +177,7 @@ class AppComponent extends React.Component {
         vPosRangeX = vPosRange.x,
 
         imgsArrangeTopArr = [],
-        topImgNum = Math.ceil(Math.random() * 2),   //取一个活着不去
+        topImgNum = Math.floor(Math.random() * 2),   //取一个活着不去
         topImgSpliceIndex = 0,
 
         imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex,1);
@@ -226,7 +226,7 @@ class AppComponent extends React.Component {
               isCenter:false
           };
         }
-
+        
         if (imgsArrangeTopArr && imgsArrangeTopArr[0]) {
           imgsArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
         }
@@ -328,7 +328,7 @@ class AppComponent extends React.Component {
       }
 
       imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
-    controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} />);
+      controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)} />);
     }.bind(this));
 
 

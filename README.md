@@ -20,3 +20,6 @@ CSS3翻转属性
 6. perspective:1800px;
 7. Icon Font:字体文件 取代图片文件展示图片（1体积小，2支持css3属性变形）需在头部进行字体声明：@font-face{font-family:"";src:url() format(兼容)}
 8. CSS3伪元素&::after插入元素，而伪类的方式只需使用&:hover一个冒号。
+
+### 调试技巧
+debugger();
