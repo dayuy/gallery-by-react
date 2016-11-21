@@ -1,4 +1,10 @@
 /* Base Application Styles */
+
+@font-face{
+  font-family:"icons-turn-arrow";
+  src:url("../fonts/icons/turn-arrow.eot") format('embedded-opentype'),url('../fonts/icons/turn-arrow.ttf') format("truetype"),url('../fonts/icons/turn-arrow.woff') format('woff');
+}
+
 html,body{
   width:100%;
   height:100%;
@@ -23,6 +29,7 @@ html,body{
   position:relative;
   height:100%;
   width:100%;
+  perspective:1800px;
   overflow:hidden;
   background-color: #ddd;
 
@@ -35,7 +42,17 @@ html,body{
       padding:40px;
 
       background-color:#fff;
+      cursor:point;
+
       box-sizing:border-box;
+      transform-origin:0 50% 0;
+      transform-style:preserve-3d;
+      transition:transform .6s ease-in-out,left .6s ease-in-out,top .6s ease-in-out;
+      
+
+      &.is-inverse{
+        transform:translate(320px) rotateY(180deg);
+      }
 
       img{
         width:230px;
@@ -50,6 +67,27 @@ html,body{
         color:#a7a0a2;
         font-size:16px;
       }
+      .img-back{
+        position:absolute;
+        left:0;
+        top:0;
+
+        width:310px;
+        height:360px;
+        padding:50px 40px;
+        overflow:auto;
+        text-align:center;
+
+        box-sizing:border-box;
+        text-align:center;
+        color:#666;
+        font-size:22px;
+        line-height:1.25;
+
+        background-color:#fff;
+        transform:rotateY(180deg) translateZ(1px);
+        
+      }
     }
   }
 }
@@ -62,4 +100,42 @@ html,body{
   z-index: 101;
   width:100%;
   text-align: center;
+
+  @at-root{
+    .controller-unit{
+      display:inline-block;
+      margin:0 5px;
+      width:30px;
+      height:30px;
+      text-align:center;
+      vertical-align:middle;
+
+      cursor:pointer;
+      background-color:#aaa;
+      border-radius:50%;
+      transform:scale(.5);
+
+      transition:transform .6s ease-in-out,background-color .3s;
+
+      &.is-center{
+        transform:scale(1);
+        background-color:#888;
+
+        &::after{
+          color:#fff;
+          font-family:'icons-turn-arrow';
+          content:'\e600';
+          line-height:30px;
+          font-size:80%;
+          -webkit-font-smoothing:antialiased;
+          -moz-osx-font-smoothing:grayscale;
+        }
+
+        &.is-inverse{
+          background-color:#555;
+          transform:rotateY(180deg);
+        }
+      }
+    }
+  }
 }
