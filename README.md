@@ -12,7 +12,7 @@
     1. 打包到dist目录npm run copy & webpack --env=dist
     2. git add \git commit
     3. git subtree push --prefix=dist origin gh-pages  推送到Github提供的静态文件访问上
-    4. 访问
+    4. 访问http://xiaoqiany.club/gallery-by-react/
 
 ### 知识点
 CSS3翻转属性
