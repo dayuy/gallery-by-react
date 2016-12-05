@@ -11,6 +11,10 @@ html,body{
   background-color: #222;
 }
 
+#app{
+  height:100%
+}
+
 .content{
   width:100%;
   height:100%;
@@ -20,7 +24,7 @@ html,body{
 .stage{
   position:relative;
   width:100%;
-  height:680px;
+  height:100%;
 }
 
 
